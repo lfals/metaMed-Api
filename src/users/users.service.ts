@@ -29,8 +29,11 @@ export class UsersService {
         throw new HttpException('User Already exists', HttpStatus.CONFLICT);
       }
 
-      return this.usersRepository.save(newUser).then(() => {
-        throw new HttpException('User Created', HttpStatus.CREATED);
+      return this.usersRepository.save(newUser).then((user) => {
+        throw new HttpException(
+          { message: 'User Created', userId: user.id },
+          HttpStatus.CREATED,
+        );
       });
     });
   }
@@ -85,3 +88,4 @@ export class UsersService {
     throw new HttpException('User edited ', HttpStatus.OK);
   }
 }
+
