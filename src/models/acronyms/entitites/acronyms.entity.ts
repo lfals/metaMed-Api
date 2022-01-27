@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-@Entity()
-export class UsersEntity {
+@Entity('acronyms')
+export class AcronymsEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -14,18 +12,21 @@ export class UsersEntity {
 
   @ApiProperty()
   @Column({ length: 100 })
-  @IsEmail()
-  email: string;
+  description: string;
+
+  @ApiProperty()
+  @Column({ length: 100, nullable: true })
+  applicability: string;
 
   @ApiProperty()
   @Column()
-  password: string;
+  language: string;
 
   @ApiProperty()
-  @Column()
-  role: string;
+  @Column({ nullable: true })
+  translation: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 }

@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../models/users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UsersEntity } from 'src/entity/user.entity';
+import { UsersEntity } from 'src/models/users/entities/users.entity';
 import { check } from 'src/helpers/encryption/hashing.helpers';
 import { HttpStatus } from '@nestjs/common';
 

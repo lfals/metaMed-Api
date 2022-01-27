@@ -1,4 +1,3 @@
-import { ValidationPipe } from './../validation/validation.pipe';
 import { UsersService } from './users.service';
 import {
   Body,
@@ -11,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
-import { UsersEntity } from 'src/entity/user.entity';
+import { UsersEntity } from 'src/models/users/entities/users.entity';
 
 @ApiTags('Users')
 @Controller('users')
@@ -24,14 +23,14 @@ export class UserController {
     return this.usersService.findOne(req);
   }
   @Post()
-  async createUser(@Body(new ValidationPipe()) body: UsersEntity) {
+  async createUser(@Body() body: UsersEntity) {
     return this.usersService.createUser(body);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getUsers(@Body() body) {
-    return this.usersService.getUsers(body.userId);
+  async getUsers() {
+    return this.usersService.getUsers();
   }
 
   @UseGuards(JwtAuthGuard)
@@ -42,7 +41,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Patch()
-  async updateUser(@Body(new ValidationPipe()) body: UsersEntity) {
+  async updateUser(@Body() body: UsersEntity) {
     return this.usersService.editUser(body);
   }
 }

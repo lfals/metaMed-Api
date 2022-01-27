@@ -1,4 +1,4 @@
-import { UsersEntity } from '../entity/user.entity';
+import { UsersEntity } from './entities/users.entity';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -38,14 +38,8 @@ export class UsersService {
     });
   }
 
-  async getUsers(id) {
-    const user = await this.usersRepository.findOne({ id: id });
-
-    if (user.role === 'admin') {
-      return await this.usersRepository.findAndCount();
-    }
-
-    throw new HttpException('User is not admin', HttpStatus.FORBIDDEN);
+  async getUsers() {
+    return await this.usersRepository.findAndCount();
   }
 
   async deleteUser(id) {
@@ -88,4 +82,3 @@ export class UsersService {
     throw new HttpException('User edited ', HttpStatus.OK);
   }
 }
-

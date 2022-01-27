@@ -1,12 +1,14 @@
-import { UserController } from './users/user.controller';
+import { UserController } from './models/users/users.controller';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './models/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthController } from './auth/auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AcronymsModule } from './models/acronyms/acronyms.module';
+import { AcronymsController } from './models/acronyms/acronyms.controller';
 
 @Module({
   imports: [
@@ -29,8 +31,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     AuthModule,
     UsersModule,
+    AcronymsModule,
   ],
-  controllers: [AppController, AuthController, UserController],
+  controllers: [
+    AppController,
+    AuthController,
+    UserController,
+    AcronymsController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}
