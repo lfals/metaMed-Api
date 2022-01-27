@@ -10,6 +10,10 @@ export class AcronymsService {
     private acronymsRepository: Repository<AcronymsEntity>,
   ) {}
 
+  async findOne(id) {
+    return this.acronymsRepository.findOne({ id: id });
+  }
+
   async createAcronym(acronym: AcronymsEntity) {
     const newAcronym = new AcronymsEntity();
 
@@ -35,6 +39,60 @@ export class AcronymsService {
             HttpStatus.CREATED,
           );
         });
+      });
+  }
+
+  async getAcronyms() {
+    return await this.acronymsRepository.findAndCount();
+  }
+
+  async deleteAcronym(id) {
+    return await this.acronymsRepository
+      .delete({ id: id })
+      .then(() => {
+        throw new HttpException('Acronym Deleted', HttpStatus.OK);
+      })
+      .catch((err) => {
+        throw new HttpException(
+          { message: 'Error on acronym delete', error: err },
+          HttpStatus.BAD_REQUEST,
+        );
+      });
+  }
+
+  async editAcronym(acronym: AcronymsEntity) {
+    const oldAcronym = await this.acronymsRepository.findOne(acronym.id);
+
+    const updatedAcronym = new AcronymsEntity();
+
+    updatedAcronym.name = acronym.name ? acronym.name : oldAcronym.name;
+
+    updatedAcronym.description = acronym.description
+      ? acronym.description
+      : oldAcronym.description;
+
+    updatedAcronym.language = acronym.language
+      ? acronym.language
+      : oldAcronym.language;
+
+    updatedAcronym.translation = acronym.translation
+      ? acronym.translation
+      : oldAcronym.translation;
+
+    updatedAcronym.isActive = acronym.isActive
+      ? acronym.isActive
+      : oldAcronym.isActive;
+
+    this.acronymsRepository
+      .update(acronym.id, updatedAcronym)
+      .then(() => {
+        throw new HttpException('User edited ', HttpStatus.OK);
+      })
+      .catch((err) => {
+        throw new HttpException(
+          { message: 'Error on acronym edit', error: err },
+          HttpStatus.BAD_REQUEST,
+        );
       });
   }
 }
