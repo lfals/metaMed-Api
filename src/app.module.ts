@@ -9,6 +9,8 @@ import { AuthController } from './auth/auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AcronymsModule } from './models/acronyms/acronyms.module';
 import { AcronymsController } from './models/acronyms/acronyms.controller';
+import { ManeuverModule } from './models/maneuvers/maneuvers.module';
+import { ManeuversController } from './models/maneuvers/maneuvers.controller';
 
 @Module({
   imports: [
@@ -32,12 +34,14 @@ import { AcronymsController } from './models/acronyms/acronyms.controller';
     AuthModule,
     UsersModule,
     AcronymsModule,
+    ManeuverModule,
   ],
   controllers: [
     AppController,
     AuthController,
     UserController,
     AcronymsController,
+    ManeuversController,
   ],
   providers: [AppService],
 })
