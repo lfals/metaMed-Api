@@ -28,7 +28,7 @@ export class ManeuversService {
 
     newManeuver.name = maneuver.name;
     newManeuver.description = maneuver.description;
-    newManeuver.aplicability = maneuver.aplicability;
+    newManeuver.applicability = maneuver.applicability;
     newManeuver.ifNegative = maneuver.ifNegative;
     newManeuver.ifPositive = maneuver.ifPositive;
     newManeuver.image = maneuver.image;
