@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   UseGuards,
@@ -25,6 +26,11 @@ export class UserController {
   @Post()
   async createUser(@Body() body: UsersEntity) {
     return this.usersService.createUser(body);
+  }
+
+  @Get('user/:id')
+  async getUser(@Param('id') id: string) {
+    return this.usersService.getUser(id);
   }
 
   @UseGuards(JwtAuthGuard)

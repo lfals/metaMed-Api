@@ -81,4 +81,11 @@ export class UsersService {
 
     throw new HttpException('User edited ', HttpStatus.OK);
   }
+
+  async getUser(id) {
+    const user = await this.usersRepository.findOne({ id: id });
+    console.log(user);
+
+    return user;
+  }
 }

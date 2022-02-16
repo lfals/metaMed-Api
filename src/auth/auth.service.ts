@@ -15,18 +15,26 @@ export class AuthService {
   async validateUser(email: string, pass: string) {
     const user = await this.usersService.findOne(email);
 
+    if (!user) {
+      throw new HttpException(
+        'Wrong user password/email',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
     const checkval = await check(pass, user.password);
     if (checkval) {
       const { password, ...result } = user;
       return result;
     }
-    throw new HttpException('Wrong user password', HttpStatus.FORBIDDEN);
+    throw new HttpException('Wrong user password/email', HttpStatus.FORBIDDEN);
   }
 
   async login(body: UsersEntity) {
     const user = await this.validateUser(body.email, body.password);
 
     const payload = {
+      name: user.name,
       email: user.email,
       sub: user.id,
       role: user.role,

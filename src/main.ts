@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const whitelist = ['http://localhost', 'http://www.localhost'];
   app.enableCors();
   const config = new DocumentBuilder()
     .setTitle(`Meta Med`)

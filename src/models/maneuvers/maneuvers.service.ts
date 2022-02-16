@@ -72,46 +72,13 @@ export class ManeuversService {
   }
 
   async editManeuver(maneuver: ManeuversEntity) {
-    const oldManeuver = await this.maneuversRepository.findOne(maneuver.id);
+    return this.maneuversRepository.save(maneuver).then((response) => {
+      console.log(response);
 
-    const updatedManeuver = new ManeuversEntity();
-
-    updatedManeuver.name = maneuver.name ? maneuver.name : oldManeuver.name;
-
-    updatedManeuver.description = maneuver.description
-      ? maneuver.description
-      : oldManeuver.description;
-
-    updatedManeuver.aplicability = maneuver.aplicability
-      ? maneuver.aplicability
-      : oldManeuver.aplicability;
-
-    updatedManeuver.ifPositive = maneuver.ifPositive
-      ? maneuver.ifPositive
-      : oldManeuver.ifPositive;
-
-    updatedManeuver.ifNegative = maneuver.ifNegative
-      ? maneuver.ifNegative
-      : oldManeuver.ifNegative;
-
-    updatedManeuver.who = maneuver.who ? maneuver.who : oldManeuver.who;
-
-    updatedManeuver.image = maneuver.image ? maneuver.image : oldManeuver.image;
-
-    updatedManeuver.isActive = maneuver.isActive
-      ? maneuver.isActive
-      : oldManeuver.isActive;
-
-    this.maneuversRepository
-      .update(maneuver.id, updatedManeuver)
-      .then(() => {
-        throw new HttpException('Maneuver Edited', HttpStatus.OK);
-      })
-      .catch((err) => {
-        throw new HttpException(
-          { message: 'Error on Maneuver edit', error: err },
-          HttpStatus.BAD_REQUEST,
-        );
-      });
+      throw new HttpException(
+        { message: 'Maneuver Edit Success', response: response },
+        HttpStatus.OK,
+      );
+    });
   }
 }
