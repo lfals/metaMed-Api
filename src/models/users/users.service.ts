@@ -17,7 +17,6 @@ export class UsersService {
 
   async createUser(user: UsersEntity) {
     const newUser = new UsersEntity();
-
     newUser.name = user.name;
     newUser.email = user.email;
     newUser.password = await hash(user.password);

@@ -45,7 +45,6 @@ export class UserController {
     return this.usersService.deleteUser(body.id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch()
   async updateUser(@Body() body: UsersEntity) {
     return this.usersService.editUser(body);

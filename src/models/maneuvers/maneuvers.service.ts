@@ -54,11 +54,11 @@ export class ManeuversService {
   }
 
   async getManeuvers() {
-    return await this.maneuversRepository.findAndCount();
+    return this.maneuversRepository.findAndCount();
   }
 
   async deleteManeuver(id) {
-    return await this.maneuversRepository
+    return this.maneuversRepository
       .delete({ id: id })
       .then(() => {
         throw new HttpException('Maneuver Deleted', HttpStatus.OK);
@@ -73,7 +73,6 @@ export class ManeuversService {
 
   async editManeuver(maneuver: ManeuversEntity) {
     return this.maneuversRepository.save(maneuver).then((response) => {
-      console.log(response);
 
       throw new HttpException(
         { message: 'Maneuver Edit Success', response: response },
